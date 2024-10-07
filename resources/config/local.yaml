@@ -1,0 +1,7 @@
+env: local
+httpServer:
+  addr: ${SERVER_ADDR}
+  port: ${SERVER_PORT}
+  timeout: 4s
+  idleTimeout: 60s
+  shutDownTimeout: 5s
