@@ -36,11 +36,11 @@ This service implements an API for validating user credit cards using Luhn algor
 ## How to run
 Clone the repository to your local machine:
 ```sh
-git clone repo
+git clone https://github.com/ArtemLymarenko/card-validator-service.git
 cd card-validator-service
 ```
 
-Fill a `.env` file in the root directory with the necessary environment variables, using `.env.example` (just copy all data)
+***!!!*** Fill `.env` file in the root directory with the necessary environment variables, using `.env.example` (just copy all data)
 ### Make
 To build binary file:
 ```sh
