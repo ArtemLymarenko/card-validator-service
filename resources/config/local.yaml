@@ -1,4 +1,13 @@
 env: local
+postgres:
+  user: ${DB_USER}
+  password: ${DB_PASSWORD}
+  port: ${DB_PORT}
+  host: ${DB_HOST}
+  name: ${DB_NAME}
+  dialect: postgres
+  poolMin: 2
+  poolMax: 10
 httpServer:
   addr: ${SERVER_ADDR}
   port: ${SERVER_PORT}

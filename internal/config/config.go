@@ -11,7 +11,7 @@ import (
 type Env string
 
 const (
-	EnvLocal = "local"
+	EnvLocal Env = "local"
 )
 
 type Config struct {
@@ -27,7 +27,18 @@ type HttpServer struct {
 	ShutDownTimeout time.Duration `yaml:"shutDownTimeout"`
 }
 
-func expandContentWithEnvVars(input string) string {
+type Postgres struct {
+	User     string `yaml:"user"`
+	Password string `yaml:"password"`
+	Host     string `yaml:"host"`
+	Name     string `yaml:"name"`
+	Dialect  string `yaml:"dialect"`
+	Port     int    `yaml:"port"`
+	PoolMin  int    `yaml:"poolMin"`
+	PoolMax  int    `yaml:"poolMax"`
+}
+
+func expandContentWithEnv(input string) string {
 	mapping := func(key string) string {
 		return os.Getenv(key)
 	}
@@ -35,30 +46,38 @@ func expandContentWithEnvVars(input string) string {
 	return os.Expand(input, mapping)
 }
 
-func parseYamlWithEnv[T any](file string) *T {
+func parseYamlWithEnv(file string) (config *Config) {
 	content, err := os.ReadFile(file)
 	if err != nil {
-		return nil
+		return config
 	}
 
-	contentWithEnv := expandContentWithEnvVars(string(content))
-
-	var config T
-	err = yaml.Unmarshal([]byte(contentWithEnv), &config)
+	enrichedContent := expandContentWithEnv(string(content))
+	err = yaml.Unmarshal([]byte(enrichedContent), &config)
 	if err != nil {
-		return nil
+		return config
 	}
 
-	return &config
+	return config
 }
 
-func MustGet[T any](path string) *T {
+func getConfigPath(env Env) string {
+	const prefix = "resources/config"
+	switch env {
+	case EnvLocal:
+		return prefix + "/local.yaml"
+	}
+	return ""
+}
+
+func MustGet(env Env) *Config {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal(ErrFailedToLoadEnv)
 	}
 
-	config := parseYamlWithEnv[T](path)
+	path := getConfigPath(env)
+	config := parseYamlWithEnv(path)
 	if config == nil {
 		log.Fatal(ErrParsingYaml)
 	}
