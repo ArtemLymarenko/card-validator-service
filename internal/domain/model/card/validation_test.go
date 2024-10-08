@@ -3,15 +3,9 @@ package card
 import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 	"testing"
 	"time"
 )
-
-type CardMock struct {
-	mock.Mock
-	Card
-}
 
 func TestIsCardDigitValid(t *testing.T) {
 	tests := []struct {
@@ -130,7 +124,7 @@ func TestValidate(t *testing.T) {
 			err:     ErrInvalidCardMonth,
 		},
 		{
-			card:    Card{Number: "4111111111111111", ExpYear: Year(time.Now().Year()), ExpMonth: Month(time.Now().Month())},
+			card:    Card{Number: "371449635398431", ExpYear: Year(time.Now().Year()), ExpMonth: Month(time.Now().Month())},
 			isValid: true,
 			err:     nil,
 		},
