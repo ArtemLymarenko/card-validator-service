@@ -23,7 +23,7 @@ func NewLRU[K comparable, V any](cap int) *LRU[K, V] {
 	}
 }
 
-func (lru *LRU[K, V]) Get(key K) (value V, ok bool) {
+func (lru *LRU[K, V]) Get(key K) (value V, found bool) {
 	if node, ok := lru.cache[key]; ok {
 		lru.list.MoveToFront(node)
 		return node.Value, true

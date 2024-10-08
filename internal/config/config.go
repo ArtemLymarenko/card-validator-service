@@ -17,11 +17,11 @@ const (
 type Config struct {
 	Env        Env        `yaml:"env"`
 	HttpServer HttpServer `yaml:"httpServer"`
+	Cache      Cache      `yaml:"cache"`
 }
 
 type HttpServer struct {
 	Addr            string        `yaml:"addr"`
-	Port            int           `yaml:"port"`
 	Timeout         time.Duration `yaml:"timeout"`
 	IdleTimeout     time.Duration `yaml:"idleTimeout"`
 	ShutDownTimeout time.Duration `yaml:"shutDownTimeout"`
@@ -36,6 +36,10 @@ type Postgres struct {
 	Port     int    `yaml:"port"`
 	PoolMin  int    `yaml:"poolMin"`
 	PoolMax  int    `yaml:"poolMax"`
+}
+
+type Cache struct {
+	Cap int `yaml:"cap"`
 }
 
 func expandContentWithEnv(input string) string {

@@ -1,25 +1,27 @@
-package v1
+package v1Router
 
-import "github.com/gin-gonic/gin"
+import (
+	v1Handlers "card-validator-service/internal/interface/rest/v1/handlers"
+	"github.com/gin-gonic/gin"
+)
 
 const (
 	ApiV1 = "/api/v1"
 )
 
-func InitializeRouter(handlers interface{}) *gin.Engine {
+func GetGinRouter(handlers *v1Handlers.Handlers) *gin.Engine {
 	const (
 		GroupCard = "/card"
-	)
-
-	const (
-		CardValidate = "/validate"
+		Validate  = "/validate"
 	)
 
 	router := gin.Default()
 	apiV1Routes := router.Group(ApiV1)
 	cardGroup := apiV1Routes.Group(GroupCard)
 
-	cardGroup.POST(CardValidate)
+	//GROUP: /card
+	//Method: /validate
+	cardGroup.POST(Validate, handlers.CardHandler.ValidateCard)
 
 	return router
 }
