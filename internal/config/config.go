@@ -11,7 +11,8 @@ import (
 type Env string
 
 const (
-	EnvLocal Env = "local"
+	EnvLocal   Env = "local"
+	EnvRelease Env = "release"
 )
 
 type Config struct {
@@ -25,17 +26,6 @@ type HttpServer struct {
 	Timeout         time.Duration `yaml:"timeout"`
 	IdleTimeout     time.Duration `yaml:"idleTimeout"`
 	ShutDownTimeout time.Duration `yaml:"shutDownTimeout"`
-}
-
-type Postgres struct {
-	User     string `yaml:"user"`
-	Password string `yaml:"password"`
-	Host     string `yaml:"host"`
-	Name     string `yaml:"name"`
-	Dialect  string `yaml:"dialect"`
-	Port     int    `yaml:"port"`
-	PoolMin  int    `yaml:"poolMin"`
-	PoolMax  int    `yaml:"poolMax"`
 }
 
 type Cache struct {
@@ -70,6 +60,8 @@ func getConfigPath(env Env) string {
 	switch env {
 	case EnvLocal:
 		return prefix + "/local.yaml"
+	case EnvRelease:
+		return prefix + "/release.yaml"
 	}
 	return ""
 }

@@ -26,6 +26,7 @@ type CardValidationResponse struct {
 
 func NewCardValidationError(err error) *CardValidationError {
 	var code StatusCode
+
 	switch {
 	case errors.Is(err, card.ErrInvalidLuhnCheck):
 		code = StatusInvalidCardNumber
@@ -37,10 +38,14 @@ func NewCardValidationError(err error) *CardValidationError {
 		code = StatusBadRequest
 	}
 
-	return &CardValidationError{
-		Code:    code,
-		Message: err.Error(),
+	if err != nil {
+		return &CardValidationError{
+			Code:    code,
+			Message: err.Error(),
+		}
 	}
+
+	return nil
 }
 
 func NewCardValidationResponse(valid bool, err error) CardValidationResponse {

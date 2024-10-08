@@ -5,10 +5,10 @@ import (
 	"card-validator-service/internal/interface/rest/dto"
 )
 
-func FromCardRequestDTOToCard(cardDTO dto.CardValidationRequest) card.Card {
+func FromCardValidationRequestDTOToCard(cardRequestDTO dto.CardValidationRequest) card.Card {
 	return card.Card{
-		Number:   card.Number(cardDTO.Number),
-		ExpYear:  card.Year(cardDTO.ExpYear),
-		ExpMonth: card.Month(cardDTO.ExpMonth),
+		Number:   card.Number(cardRequestDTO.Number),
+		ExpYear:  card.Year(cardRequestDTO.ExpYear),
+		ExpMonth: card.Month(cardRequestDTO.ExpMonth),
 	}
 }

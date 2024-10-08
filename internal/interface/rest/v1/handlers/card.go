@@ -17,21 +17,21 @@ func NewCardHandler() *CardHandlerImpl {
 func (handler *CardHandlerImpl) ValidateCard(c *gin.Context) {
 	var cardToValidate dto.CardValidationRequest
 	if err := c.ShouldBindJSON(&cardToValidate); err != nil {
+		logrus.WithError(err).Error("Failed to decode request body")
 		c.JSON(http.StatusBadRequest, dto.NewCardValidationResponse(false, ErrFailedToDecodeBody))
 		return
 	}
+	logrus.Info("JSON body was successfully read and decoded")
 
-	card := mapper.FromCardRequestDTOToCard(cardToValidate)
-	logrus.Info("mapped requests value", card)
+	card := mapper.FromCardValidationRequestDTOToCard(cardToValidate)
+	logrus.Info("Request values were mapped to domain model")
 
 	valid, err := card.Validate()
-	logrus.Info("card validated", card)
-
-	response := dto.NewCardValidationResponse(valid, err)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, response)
+		logrus.WithError(err).Warn("Card validation failed")
+		c.JSON(http.StatusBadRequest, dto.NewCardValidationResponse(valid, err))
 		return
 	}
 
-	c.JSON(http.StatusOK, response)
+	c.JSON(http.StatusOK, dto.NewCardValidationResponse(valid, err))
 }

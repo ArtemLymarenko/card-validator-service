@@ -29,7 +29,7 @@ func (app *Application) Start() {
 
 	logrus.Info(fmt.Sprintf("HTTP server addr: %s", app.server.Addr))
 	if err := app.server.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
-		logrus.Info("HTTP server ListenAndServe: %v", err)
+		logrus.Info("HTTP server ListenAndServe")
 	}
 
 	<-idleConnsClosed
@@ -46,7 +46,7 @@ func (app *Application) gracefulShutDown(idleConnsClosed chan struct{}) {
 	defer cancel()
 
 	if err := app.server.Shutdown(ctx); err != nil {
-		logrus.Info("http-server server shutdown: %v", err)
+		logrus.WithError(err).Warn("http-server server shutdown")
 	}
 
 	close(idleConnsClosed)

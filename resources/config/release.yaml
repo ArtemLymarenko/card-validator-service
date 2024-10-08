@@ -1,0 +1,8 @@
+env: release
+httpServer:
+  addr: ${SERVER_ADDR}
+  timeout: 4s
+  idleTimeout: 60s
+  shutDownTimeout: 5s
+cache:
+  cap: ${CACHE_CAP}
