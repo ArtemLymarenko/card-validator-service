@@ -11,6 +11,13 @@ This service implements an API for validating user credit cards using Luhn algor
 `None`
 
 #### Request body
+```json
+{
+    "number": "411111111111111",
+    "expYear": 2024,
+    "expMonth": 12
+}
+```
 - ``number`` **string**: The credit card number to validate.
 - ``expYear`` **int**: Expiration year.
 - ``expMonth`` **int**: Expiration month.
@@ -25,7 +32,7 @@ This service implements an API for validating user credit cards using Luhn algor
     }
   }
 ```
-#### Response Body Status Codes
+#### Response Status Codes
 ```
 001: Invalid Card Number
 002: Invalid Card Year
