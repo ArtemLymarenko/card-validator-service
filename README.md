@@ -47,7 +47,7 @@ git clone https://github.com/ArtemLymarenko/card-validator-service.git
 cd card-validator-service
 ```
 
-***!!!*** Fill `.env` file in the root directory with the necessary environment variables, using `.env.example` (just copy all data)
+***!!!*** Fill `.env` file in the root directory with the necessary environment variables, using `.env.example` (just copy all fields)
 ### Make
 To build binary file:
 ```sh
