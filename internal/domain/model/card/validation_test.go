@@ -48,8 +48,11 @@ func TestIsValidNumberLuhn(t *testing.T) {
 		card    Card
 		isValid bool
 	}{
-		{card: Card{Number: "4111111111111111"}, isValid: true},  // Valid Luhn
-		{card: Card{Number: "4111111111111112"}, isValid: false}, // Invalid Luhn
+		{card: Card{Number: "4111111111111111"}, isValid: true},
+		{card: Card{Number: "371449635398431"}, isValid: true},
+		{card: Card{Number: "30569309025904"}, isValid: true},
+		{card: Card{Number: "5555555555554444"}, isValid: true},
+		{card: Card{Number: "4111111111111112"}, isValid: false},
 	}
 
 	for _, test := range tests {
@@ -64,11 +67,11 @@ func TestIsValidYear(t *testing.T) {
 		card    Card
 		isValid bool
 	}{
-		{card: Card{ExpYear: Year(time.Now().Year())}, isValid: true},      // Current year
-		{card: Card{ExpYear: Year(time.Now().Year() + 1)}, isValid: true},  // Valid future year
-		{card: Card{ExpYear: Year(2099)}, isValid: true},                   // Maximum valid year
-		{card: Card{ExpYear: Year(2100)}, isValid: false},                  // Year > MaxValidYear
-		{card: Card{ExpYear: Year(time.Now().Year() - 1)}, isValid: false}, // Past year
+		{card: Card{ExpYear: Year(time.Now().Year())}, isValid: true},
+		{card: Card{ExpYear: Year(time.Now().Year() + 1)}, isValid: true},
+		{card: Card{ExpYear: Year(2099)}, isValid: true},
+		{card: Card{ExpYear: Year(2100)}, isValid: false},
+		{card: Card{ExpYear: Year(time.Now().Year() - 1)}, isValid: false},
 	}
 
 	for _, test := range tests {
@@ -83,11 +86,11 @@ func TestIsValidMonth(t *testing.T) {
 		card    Card
 		isValid bool
 	}{
-		{card: Card{ExpMonth: Month(time.Now().Month())}, isValid: true}, // Current month
-		{card: Card{ExpMonth: Month(5)}, isValid: true},                  // Valid month
-		{card: Card{ExpMonth: Month(12)}, isValid: true},                 // Maximum valid month
-		{card: Card{ExpMonth: Month(13)}, isValid: false},                // Month > MaxValidMonth
-		{card: Card{ExpMonth: Month(0)}, isValid: false},                 // Invalid month (0)
+		{card: Card{ExpMonth: Month(time.Now().Month())}, isValid: true},
+		{card: Card{ExpMonth: Month(5)}, isValid: true},
+		{card: Card{ExpMonth: Month(12)}, isValid: true},
+		{card: Card{ExpMonth: Month(13)}, isValid: false},
+		{card: Card{ExpMonth: Month(0)}, isValid: false},
 	}
 
 	for _, test := range tests {
